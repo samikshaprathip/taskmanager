@@ -11,3 +11,5 @@ const InviteSchema = new mongoose.Schema({
 })
 
 export default mongoose.model('Invite', InviteSchema)
+
+// ggvcf

@@ -5,23 +5,25 @@ import { tasks as api } from '../api'
 export default function useTaskCounts(){
   const { token } = useAuth()
   const [loading, setLoading] = useState(false)
-  const [counts, setCounts] = useState({ total:0, active:0, completed:0, overdue:0 })
+  const [counts, setCounts] = useState({ total:0, active:0, completed:0, overdue:0, personal:0 })
 
   const load = useCallback(async ()=>{
-    if(!token) { setCounts({ total:0, active:0, completed:0, overdue:0 }); return }
+    if(!token) { setCounts({ total:0, active:0, completed:0, overdue:0, personal:0 }); return }
     setLoading(true)
     try{
       const res = await api.list(token)
       const list = res.tasks || []
+      const personalTasks = list.filter(t => !t.project)
       const total = list.length
+      const personal = personalTasks.length
       const completed = list.filter(t=>t.completed).length
       const active = total - completed
       const now = new Date()
       const overdue = list.filter(t=>t.dueDate && !t.completed && new Date(t.dueDate) < now).length
-      setCounts({ total, active, completed, overdue })
+      setCounts({ total, active, completed, overdue, personal })
     }catch(err){
       console.error('Failed to load task counts', err)
-      setCounts({ total:0, active:0, completed:0, overdue:0 })
+      setCounts({ total:0, active:0, completed:0, overdue:0, personal:0 })
     }finally{ setLoading(false) }
   }, [token])
 

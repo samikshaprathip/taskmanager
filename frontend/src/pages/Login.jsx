@@ -14,7 +14,15 @@ const Login = () => {
     setError(null)
     try{
       await login(email, password)
-      navigate('/')
+      
+      // Check if there's a pending invite to redirect to
+      const pendingInvite = sessionStorage.getItem('pendingInvite')
+      if(pendingInvite) {
+        sessionStorage.removeItem('pendingInvite')
+        navigate(`/invite/accept/${pendingInvite}`)
+      } else {
+        navigate('/')
+      }
     }catch(err){
       setError(err.message || 'Login failed')
     }

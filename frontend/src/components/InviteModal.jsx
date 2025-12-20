@@ -3,6 +3,7 @@ import Modal from 'react-modal'
 import { useAuth } from '../context/AuthContext'
 import { collab as collabApi } from '../api'
 import { toast } from 'react-toastify'
+import '../styles/invite-modal.css'
 
 Modal.setAppElement('#root')
 
@@ -46,67 +47,71 @@ export default function InviteModal({ isOpen, onRequestClose, projectId }){
   }
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={closeModal} overlayClassName="modal-overlay" className="card max-w-md" contentLabel="Invite">
-      <h3 className="text-lg font-semibold mb-3">Invite to Project</h3>
-      
-      {!showLink ? (
-        <form onSubmit={submit} className="space-y-3">
-          <div>
-            <label className="block text-sm text-gray-600 mb-1">Email address</label>
-            <input 
-              value={email} 
-              onChange={e=>setEmail(e.target.value)} 
-              placeholder="colleague@example.com" 
-              className="w-full p-2 border rounded" 
-              type="email"
-              required 
-            />
-          </div>
-          <div className="flex justify-end gap-2">
-            <button type="button" onClick={closeModal} className="px-3 py-1 border rounded" disabled={loading}>Cancel</button>
-            <button type="submit" className="px-4 py-2 btn-primary" disabled={loading}>
-              {loading ? 'Sending...' : 'Send invite'}
-            </button>
-          </div>
-        </form>
-      ) : (
-        <div className="space-y-3">
-          <div className="bg-green-50 border border-green-200 p-3 rounded">
-            <p className="text-sm text-green-800 font-medium mb-2">✓ Invite sent successfully!</p>
-            <p className="text-xs text-green-700">The invite link is also available below if needed.</p>
-          </div>
-          
-          <div>
-            <label className="block text-sm text-gray-600 mb-1">Shareable invite link</label>
-            <div className="flex gap-2">
+    <Modal isOpen={isOpen} onRequestClose={closeModal} overlayClassName="modal-overlay" className="invite-modal-card" contentLabel="Invite">
+      <div className="invite-modal-header">
+        <h1>Invite to Project</h1>
+        <p>Add team members to collaborate</p>
+      </div>
+      <div className="invite-modal-content">
+        {!showLink ? (
+          <form onSubmit={submit}>
+            <div className="field-group">
+              <label className="field-label">Email address</label>
               <input 
-                value={inviteLink} 
-                readOnly 
-                className="flex-1 p-2 border rounded bg-gray-50 text-sm" 
+                value={email} 
+                onChange={e=>setEmail(e.target.value)} 
+                placeholder="colleague@example.com" 
+                className="invite-input" 
+                type="email"
+                required 
               />
-              <button onClick={copyLink} className="px-3 py-2 btn-primary whitespace-nowrap">
-                Copy Link
+            </div>
+            <div className="invite-modal-actions">
+              <button type="button" onClick={closeModal} className="btn btn-cancel" disabled={loading}>Cancel</button>
+              <button type="submit" className="btn btn-save" disabled={loading}>
+                {loading ? 'Sending...' : 'Send invite'}
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-1">Anyone with this link can join the project</p>
-          </div>
-          {invitePreview && (
-            <div className="mt-3">
-              <label className="block text-sm text-gray-600 mb-1">Email preview (dev)</label>
-              <div className="flex gap-2">
-                <a href={invitePreview} target="_blank" rel="noreferrer" className="px-3 py-2 bg-gray-800 text-white rounded">Open Email Preview</a>
-                <button onClick={() => { navigator.clipboard.writeText(invitePreview); toast.success('Preview URL copied') }} className="px-3 py-2 border rounded">Copy Preview URL</button>
+          </form>
+        ) : (
+          <div>
+            <div className="success-alert">
+              <div className="success-icon">✓</div>
+              <div>
+                <p className="success-title">Invite sent successfully!</p>
+                <p className="success-text">The invite link is available below if needed.</p>
               </div>
-              <p className="text-xs text-gray-500 mt-1">This is an Ethereal preview link (development only)</p>
             </div>
-          )}
+            
+            <div className="field-group" style={{marginTop: '20px'}}>
+              <label className="field-label">Shareable invite link</label>
+              <div className="link-copy-row">
+                <input 
+                  value={inviteLink} 
+                  readOnly 
+                  className="invite-input link-input" 
+                />
+                <button onClick={copyLink} className="btn-copy">Copy</button>
+              </div>
+              <p className="field-hint">Anyone with this link can join the project</p>
+            </div>
+            {invitePreview && (
+              <div style={{marginTop: '16px'}}>
+                <label className="field-label">Email preview</label>
+                <div className="preview-actions">
+                  <a href={invitePreview} target="_blank" rel="noreferrer" className="btn btn-secondary">Open Preview</a>
+                  <button onClick={() => { navigator.clipboard.writeText(invitePreview); toast.success('Preview URL copied') }} className="btn btn-secondary">Copy URL</button>
+                </div>
+              </div>
+            )}
 
-          <div className="flex justify-end gap-2 pt-2">
-            <button onClick={()=>setShowLink(false)} className="px-3 py-1 border rounded">Invite Another</button>
-            <button onClick={closeModal} className="px-4 py-2 btn-primary">Done</button>
+            <div className="invite-modal-actions" style={{marginTop: '20px'}}>
+              <button onClick={()=>setShowLink(false)} className="btn btn-cancel">Invite Another</button>
+              <button onClick={closeModal} className="btn btn-save">Done</button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </Modal>
   )
 }

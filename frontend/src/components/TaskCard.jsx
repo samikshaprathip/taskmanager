@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
 import { tasks as api } from '../api'
-import { User, Calendar, Edit3, Trash2, Tag, Check } from 'lucide-react'
+import { User, Calendar, Edit3, Trash2, Check } from 'lucide-react'
 import { toast } from 'react-toastify'
 import LoadingSpinner from './LoadingSpinner'
 import TagsModal from './TagsModal'
@@ -10,7 +10,6 @@ const TaskCard = ({ task, onDeleted, onUpdated, onEdit }) => {
   const { token } = useAuth()
 
   const [loading, setLoading] = React.useState(false)
-  const [tagsOpen, setTagsOpen] = React.useState(false)
 
   const handleDelete = async () => {
     if(!confirm('Delete this task?')) return
@@ -66,9 +65,7 @@ const TaskCard = ({ task, onDeleted, onUpdated, onEdit }) => {
       <div className="card-actions" onClick={(e)=>e.stopPropagation()}>
         <button onClick={(e)=>{ e.stopPropagation(); onEdit?.(task) }} title="Edit" aria-label="Edit task"><Edit3 size={16} /></button>
         <button onClick={(e)=>{ e.stopPropagation(); handleDelete() }} title="Delete" aria-label="Delete task"><Trash2 size={16} /></button>
-        <button onClick={(e)=>{ e.stopPropagation(); setTagsOpen(true) }} title="Tags" aria-label="Tags"><Tag size={16} /></button>
       </div>
-      <TagsModal isOpen={tagsOpen} onRequestClose={()=>setTagsOpen(false)} task={task} onUpdated={(t)=>onUpdated?.(t)} />
     </div>
   )
 }

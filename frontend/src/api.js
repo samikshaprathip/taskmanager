@@ -37,12 +37,19 @@ export const tasks = {
 export const collab = {
   invite: (token, payload) => request('/collab/invite', { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type':'application/json' }, body: JSON.stringify(payload) }),
   accept: (token, payload) => request('/collab/accept', { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type':'application/json' }, body: JSON.stringify(payload) }),
-  listProjects: (token) => request('/collab/projects', { headers: { Authorization: `Bearer ${token}` } })
-}
-
-// add create project helper
-export const collabCreate = {
-  createProject: (token, payload) => request('/collab/projects', { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type':'application/json' }, body: JSON.stringify(payload) })
+  listProjects: (token) => request('/collab/projects', { headers: { Authorization: `Bearer ${token}` } }),
+  createProject: (token, payload) => request('/collab/projects', { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type':'application/json' }, body: JSON.stringify(payload) }),
+  getProject: (token, id) => request(`/collab/projects/${id}`, { headers: { Authorization: `Bearer ${token}` } }),
+  getShareLink: (token, id) => request(`/collab/projects/${id}/share`, { headers: { Authorization: `Bearer ${token}` } }),
+  resetShareLink: (token, id) => request(`/collab/projects/${id}/share/reset`, { method: 'POST', headers: { Authorization: `Bearer ${token}` } }),
+  deleteProject: (token, id) => request(`/collab/projects/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } }),
+  
+  // Guest/Anonymous APIs
+  getGuestProject: (inviteToken) => request(`/collab/guest/${inviteToken}/project`),
+  getGuestTasks: (inviteToken) => request(`/collab/guest/${inviteToken}/tasks`),
+  createGuestTask: (inviteToken, payload) => request(`/collab/guest/${inviteToken}/tasks`, { method: 'POST', headers: { 'Content-Type':'application/json' }, body: JSON.stringify(payload) }),
+  updateGuestTask: (inviteToken, taskId, payload) => request(`/collab/guest/${inviteToken}/tasks/${taskId}`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify(payload) }),
+  deleteGuestTask: (inviteToken, taskId) => request(`/collab/guest/${inviteToken}/tasks/${taskId}`, { method: 'DELETE' })
 }
 
 export default { auth, tasks }

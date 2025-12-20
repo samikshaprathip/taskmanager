@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
 import { useAuth } from '../context/AuthContext'
 import LoadingSpinner from './LoadingSpinner'
+import Avatar from './Avatar'
+import '../styles/profile.css'
 
 Modal.setAppElement('#root')
 
@@ -39,25 +41,41 @@ const ProfileModal = ({ isOpen, onRequestClose }) => {
   }
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Profile" className="card" overlayClassName="modal-overlay">
-      <h3 className="text-lg font-semibold mb-3">My Profile</h3>
-      <form onSubmit={save} className="space-y-3">
-        <div className="flex items-center gap-3">
-          <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100">
-            {avatarPreview ? <img src={avatarPreview} alt="avatar" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-gray-400">No</div>}
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Profile" className="profile-card" overlayClassName="modal-overlay">
+      <div className="profile-header">
+        <h1>My Profile</h1>
+        <p>Manage your account details</p>
+      </div>
+      <div className="profile-content">
+        <form onSubmit={save}>
+          <div className="profile-avatar-row">
+            <div className="avatar-frame">
+              {avatarPreview ? (
+                <img src={avatarPreview} alt="avatar" />
+              ) : (
+                <Avatar size={64} name={name} />
+              )}
+            </div>
+            <div className="upload-block">
+              <label>Avatar</label>
+              <input type="file" accept="image/*" onChange={onFile} className="file-input" />
+              <span className="hint">PNG/JPG up to 2MB</span>
+            </div>
           </div>
-          <div>
-            <label className="text-sm text-gray-600">Change avatar</label>
-            <input type="file" accept="image/*" onChange={onFile} />
+          <div className="field-group">
+            <input value={name} onChange={e=>setName(e.target.value)} placeholder="Full name" className="profile-input" />
           </div>
-        </div>
-        <input value={name} onChange={e=>setName(e.target.value)} placeholder="Full name" className="w-full p-2 border rounded" />
-        <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" className="w-full p-2 border rounded" />
-        <div className="flex justify-end gap-2">
-          <button type="button" onClick={onRequestClose} className="px-3 py-1 border rounded" disabled={saving}>Cancel</button>
-          <button type="submit" className="px-4 py-2 btn-primary flex items-center gap-2" disabled={saving}>{saving ? <LoadingSpinner size={16}/> : 'Save'}</button>
-        </div>
-      </form>
+          <div className="field-group">
+            <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" className="profile-input" />
+          </div>
+          <div className="profile-actions">
+            <button type="button" onClick={onRequestClose} className="btn btn-cancel" disabled={saving}>Cancel</button>
+            <button type="submit" className="btn btn-save" disabled={saving}>
+              {saving ? <LoadingSpinner size={16}/> : 'Save'}
+            </button>
+          </div>
+        </form>
+      </div>
     </Modal>
   )
 }

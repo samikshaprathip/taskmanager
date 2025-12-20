@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import TaskCard from '../components/TaskCard'
 import { useAuth } from '../context/AuthContext'
 import { tasks as api } from '../api'
@@ -9,8 +10,26 @@ import CalendarStrip from '../components/CalendarStrip'
 import { toast } from 'react-toastify'
 import SignInModal from '../components/SignInModal'
 import { useSearch } from '../context/SearchContext'
+import Avatar from '../components/Avatar'
+
+const normalizePriority = (p = 'Medium') => {
+  const v = (p || 'Medium').toString().toLowerCase()
+  if (v === 'high') return 'High'
+  if (v === 'low') return 'Low'
+  return 'Medium'
+}
 
 const Dashboard = () => {
+  const navigate = useNavigate()
+  
+  // Check for pending invite on mount
+  useEffect(() => {
+    const pendingInvite = sessionStorage.getItem('pendingInvite')
+    if(pendingInvite) {
+      sessionStorage.removeItem('pendingInvite')
+      navigate(`/invite/accept/${pendingInvite}`)
+    }
+  }, [navigate])
   const { token, user } = useAuth()
   const { query, filters, setFilters } = useSearch()
   const [tasks, setTasks] = useState([])
@@ -24,6 +43,23 @@ const Dashboard = () => {
   const [createDesc, setCreateDesc] = useState('')
   const [signInOpen, setSignInOpen] = useState(false)
 
+  const filterDashboardTasks = React.useCallback((list) => {
+    // Exclude project-scoped tasks (collaboration) from the personal dashboard
+    return (list || []).filter(t => !t.project)
+  }, [])
+
+  const syncPriorityBoard = React.useCallback((list) => {
+    const mapped = (list || []).map(t => ({
+      id: t._id || t.id,
+      title: t.title || '',
+      description: t.description || '',
+      dueDate: t.dueDate || '',
+      priority: normalizePriority(t.priority),
+    }))
+    localStorage.setItem('pm_tasks', JSON.stringify(mapped))
+    window.dispatchEvent(new Event('tasksUpdated'))
+  }, [])
+
   // Listen for global requests to show sign-in (e.g., TaskCard actions when unauthenticated)
   React.useEffect(()=>{
     const handler = () => setSignInOpen(true)
@@ -36,13 +72,15 @@ const Dashboard = () => {
     setLoading(true)
     try{
       const res = await api.list(token)
-      setTasks(res.tasks || [])
+      setTasks(filterDashboardTasks(res.tasks))
     }catch(err){
       console.error(err)
     }finally{ setLoading(false) }
   }
 
   useEffect(()=>{ load() }, [token])
+
+  useEffect(() => { syncPriorityBoard(tasks) }, [tasks, syncPriorityBoard])
 
   // derive filtered list from tasks based on search query and filters
   const filteredTasks = React.useMemo(()=>{
@@ -66,8 +104,6 @@ const Dashboard = () => {
       }
       const res = await api.create(token, payload)
       setTasks(prev => [res.task, ...prev])
-      // notify others to refresh counts
-      window.dispatchEvent(new Event('tasksUpdated'))
       setModalOpen(false)
       setModalSaving(false)
       toast.success('Task created')
@@ -97,7 +133,6 @@ const Dashboard = () => {
       if(!token){ setSignInOpen(true); setModalSaving(false); return }
       const res = await api.update(token, editing._id, payload)
       setTasks(prev => prev.map(t => t._id === res.task._id ? res.task : t))
-      window.dispatchEvent(new Event('tasksUpdated'))
       setModalOpen(false)
       setModalSaving(false)
       toast.success('Task updated')
@@ -109,13 +144,6 @@ const Dashboard = () => {
 
   const handleDeleted = (id) => setTasks(prev => prev.filter(t => t._id !== id))
   const handleUpdated = (updated) => setTasks(prev => prev.map(t => t._id === updated._id ? updated : t))
-  // ensure counts reflect updates when tasks are modified via TaskCard
-  React.useEffect(()=>{
-    const origHandleDeleted = handleDeleted
-    const origHandleUpdated = handleUpdated
-    // when tasks array changes, dispatch update to refresh counts
-    window.dispatchEvent(new Event('tasksUpdated'))
-  }, [tasks])
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
@@ -132,7 +160,7 @@ const Dashboard = () => {
                     {/* Display signed-in user info */}
                     {user ? (
                       <div className="flex items-center justify-end gap-3">
-                        <img src={user.avatar || `https://i.pravatar.cc/40?u=${user.email}`} alt="avatar" className="w-10 h-10 rounded-full" />
+                        <Avatar size={44} src={user?.avatar} name={user?.name} />
                         <div className="text-right">
                           <div className="font-medium">{user.name}</div>
                           <div className="text-xs text-gray-500">{user.email}</div>
@@ -215,7 +243,11 @@ const Dashboard = () => {
                       <button type="button" className="tag-chip">UI Design</button>
                     </div>
                     <div className="ml-auto flex items-center gap-2">
-                      <img src="https://i.pravatar.cc/32" alt="assignee" className="w-8 h-8 rounded-full" />
+                      <div className="rounded-full bg-gray-200 flex items-center justify-center" style={{ width: 32, height: 32 }}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.314 0-10 1.657-10 5v3h20v-3c0-3.343-6.686-5-10-5z" fill="#4b5563"/>
+                        </svg>
+                      </div>
                     </div>
                   </div>
                   <div>

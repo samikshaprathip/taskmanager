@@ -7,15 +7,17 @@ const Tasks = () => {
   const { token } = useAuth()
   const [tasks, setTasks] = useState([])
 
+  const filterPersonal = (list = []) => list.filter(t => !t.project)
+
   const load = async () => {
     if(!token) return
     const res = await api.list(token)
-    setTasks(res.tasks || [])
+    setTasks(filterPersonal(res.tasks || []))
   }
 
   useEffect(()=>{ load() }, [token])
 
-  const handleDeleted = (id) => setTasks(prev => prev.filter(t => t._1 !== id))
+  const handleDeleted = (id) => setTasks(prev => prev.filter(t => t._id !== id))
   const handleUpdated = (updated) => setTasks(prev => prev.map(t => t._id === updated._id ? updated : t))
 
   return (

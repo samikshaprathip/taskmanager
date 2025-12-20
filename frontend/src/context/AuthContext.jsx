@@ -7,6 +7,7 @@ export function AuthProvider({ children }){
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(() => localStorage.getItem('token'))
   const [loading, setLoading] = useState(false)
+  const [isGuest, setIsGuest] = useState(() => sessionStorage.getItem('isGuest') === 'true')
 
   useEffect(()=>{
     if(token){
@@ -49,10 +50,21 @@ export function AuthProvider({ children }){
     setUser(null)
     setToken(null)
     localStorage.removeItem('token')
+    setIsGuest(false)
+    sessionStorage.removeItem('isGuest')
+  }
+
+  const setGuestMode = (value) => {
+    setIsGuest(value)
+    if(value) {
+      sessionStorage.setItem('isGuest', 'true')
+    } else {
+      sessionStorage.removeItem('isGuest')
+    }
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, logout, register, updateProfile }}>
+    <AuthContext.Provider value={{ user, token, loading, isGuest, login, logout, register, updateProfile, setGuestMode }}>
       {children}
     </AuthContext.Provider>
   )

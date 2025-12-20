@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-const userModel = mongoose.models.user || mongoose.model("user",userSchema);
+// Register using capitalized name "User" to match refs in other schemas
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
-export default userModel;
+export default User;

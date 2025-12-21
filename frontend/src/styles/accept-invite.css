@@ -200,7 +200,7 @@
 
 .task-item {
   display: flex;
-  items-align: center;
+  align-items: center;
   justify-content: space-between;
   padding: 16px;
   background: #f8fafc;

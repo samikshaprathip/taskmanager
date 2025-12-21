@@ -37,9 +37,10 @@ input, textarea, select {
 	border-radius: 8px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
+	appearance: none;
 }
 
-button { cursor: pointer; -webkit-appearance: none; }
+button { cursor: pointer; -webkit-appearance: none; appearance: none; }
 
 /* Ensure images don't show black backgrounds and scale nicely */
 img { display: block; max-width: 100%; height: auto }
@@ -298,6 +299,7 @@ input:-webkit-autofill, textarea:-webkit-autofill { -webkit-box-shadow: 0 0 0px 
   background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   opacity: 1;
   transition: opacity 0.3s ease;

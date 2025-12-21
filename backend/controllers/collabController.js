@@ -34,8 +34,6 @@ async function sendInviteEmail(email, acceptUrl){
   let fromAddress = EMAIL_FROM
 
   if(!SMTP_HOST || !SMTP_USER || !SMTP_PASS){
-    // Development fallback: create an Ethereal test account so email
-    // sending works without real SMTP credentials.
     const testAccount = await nodemailer.createTestAccount()
     transporter = nodemailer.createTransport({
       host: 'smtp.ethereal.email',
@@ -54,13 +52,12 @@ async function sendInviteEmail(email, acceptUrl){
     })
   }
 
-  // Optional detailed SMTP diagnostics
   if(SMTP_DEBUG){
     transporter.set('logger', true)
     transporter.set('debug', true)
   }
 
-  // Verify SMTP connection if configured, logs helpful errors without crashing invite flow
+  
   try{
     await transporter.verify()
     console.log('SMTP connection verified')
@@ -103,7 +100,6 @@ export async function inviteMember(req, res){
     try{
       preview = await sendInviteEmail(email, acceptUrl)
     }catch(sendErr){
-      // Do not block invite creation if email fails; the share link still works.
       console.error('sendInviteEmail failed (continuing without email):', sendErr)
     }
 

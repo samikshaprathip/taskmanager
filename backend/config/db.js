@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 export const connectDB = async () => {
-    // Use MongoDB Atlas (cloud) - required for production/deployment
     const uri = process.env.MONGO_URI;
     
     if (!uri) {

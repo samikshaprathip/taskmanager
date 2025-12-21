@@ -14,7 +14,6 @@ router.post('/projects/:id/share/reset', authMiddleware, resetShareLink)
 router.delete('/projects/:id', authMiddleware, deleteProject)
 router.get('/accept/:token', authMiddleware, acceptInvite)
 
-// Guest/Anonymous routes (no auth required)
 router.get('/guest/:token/project', getGuestProject)
 router.get('/guest/:token/tasks', getGuestTasks)
 router.post('/guest/:token/tasks', createGuestTask)

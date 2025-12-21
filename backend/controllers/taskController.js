@@ -56,7 +56,6 @@ export const getTasks = async (req, res) => {
     try{
         const { projectId } = req.query;
         
-        // If projectId specified, return only tasks for that project (if user is member)
         if(projectId){
             const project = await Project.findById(projectId);
             if(!project) return res.status(404).json({success: false, message: 'Project not found'});
@@ -68,7 +67,7 @@ export const getTasks = async (req, res) => {
             return res.json({success: true, tasks});
         }
         
-        // Otherwise return user's personal tasks (no project) + tasks from projects they're in
+       
         const userProjects = await Project.find({
             $or: [ { owner: req.user.id }, { 'members.user': req.user.id } ]
         }).select('_id');
@@ -107,9 +106,8 @@ export const updateTask = async (req, res) => {
         
         const data = { ...req.body };
 
-        // Special actions: commentText, addTag, removeTag
+       
         if(typeof data.commentText !== 'undefined'){
-            // push a comment with the current user as author
             const updated = await Task.findByIdAndUpdate(
                 req.params.id,
                 { $push: { comments: { author: req.user.id, text: data.commentText } } },
@@ -143,7 +141,6 @@ export const updateTask = async (req, res) => {
 
         if(data.completed !== undefined){
             data.completed = data.completed === 'Yes' || data.completed === true;
-            // set completedAt timestamp when marking completed, clear when un-marking
             data.completedAt = data.completed ? new Date() : null
         }
 

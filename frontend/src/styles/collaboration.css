@@ -278,13 +278,131 @@ body .collab-v2 {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .collab-v2 .container { border-radius: 0; box-shadow: none; }
-  .collab-v2 .main-content { padding: 20px; }
-  .collab-v2 .project-title-section { flex-direction: column; gap: 15px; }
-  .collab-v2 .invite-link-box { flex-direction: column; align-items: flex-start; gap: 15px; }
-  .collab-v2 .btn-copy { align-self: flex-end; }
-  .collab-v2 .task-item { flex-direction: column; align-items: flex-start; gap: 15px; }
-  .collab-v2 .priority-badge { align-self: flex-start; }
+  body .collab-v2 {
+    padding: 12px;
+  }
+  
+  .collab-v2 .container { 
+    border-radius: 0; 
+    box-shadow: none; 
+  }
+  
+  .collab-v2 .page-header {
+    padding: 20px;
+  }
+  
+  .collab-v2 .page-header h1 {
+    font-size: 22px;
+  }
+  
+  .collab-v2 .project-meta {
+    gap: 12px;
+    font-size: 13px;
+  }
+  
+  .collab-v2 .main-content { 
+    padding: 20px; 
+  }
+  
+  .collab-v2 .project-title-section { 
+    flex-direction: column; 
+    gap: 15px; 
+  }
+  
+  .collab-v2 .project-info-card,
+  .collab-v2 .invite-section,
+  .collab-v2 .tasks-section {
+    padding: 18px;
+  }
+  
+  .collab-v2 .project-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .collab-v2 .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .collab-v2 .invite-link-box { 
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 15px;
+    padding: 12px;
+  }
+  
+  .collab-v2 .invite-link {
+    font-size: 13px;
+    width: 100%;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+  
+  .collab-v2 .btn-copy { 
+    align-self: stretch;
+    width: 100%;
+  }
+  
+  .collab-v2 .task-item { 
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 15px;
+    padding: 14px;
+  }
+  
+  .collab-v2 .priority-badge { 
+    align-self: flex-start; 
+  }
+  
+  .collab-v2 .section-title {
+    font-size: 18px;
+  }
+  
+  .collab-v2 .task-name {
+    font-size: 15px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .collab-v2 .page-header {
+    padding: 16px;
+  }
+  
+  .collab-v2 .page-header h1 {
+    font-size: 20px;
+  }
+  
+  .collab-v2 .main-content {
+    padding: 16px;
+  }
+  
+  .collab-v2 .project-info-card,
+  .collab-v2 .invite-section,
+  .collab-v2 .tasks-section {
+    padding: 14px;
+  }
+  
+  .collab-v2 .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  .collab-v2 .task-item {
+    padding: 12px;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .collab-v2 .container {
+    max-width: 95%;
+  }
+  
+  .collab-v2 .main-content {
+    padding: 24px;
+  }
 }
 /* Create Project Card Styles */
 .create-project-card {

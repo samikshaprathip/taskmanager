@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Search, LogOut, User } from 'lucide-react'
+import { Search, LogOut, User, Menu, X } from 'lucide-react'
 import Avatar from './Avatar'
 import { useSearch } from '../context/SearchContext'
 import useTaskCounts from '../hooks/useTaskCounts'
@@ -11,6 +11,7 @@ import ProfileModal from './ProfileModal'
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const location = useLocation()
 
     const { user, logout, isGuest } = useAuth()
@@ -23,11 +24,26 @@ const Navbar = () => {
     const counts = countsHook || { total:0, active:0, completed:0, overdue:0 }
     
     const isDashboard = location.pathname === '/'
+    
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen)
+        // Dispatch custom event for sidebar toggle
+        window.dispatchEvent(new CustomEvent('toggleMobileSidebar'))
+    }
 
         return (
                         <header className="navbar">
                                 <div className="app-container flex items-center justify-between">
                                     <div className="nav-left">
+                                        {!isGuest && (
+                                            <button 
+                                                onClick={toggleMobileMenu} 
+                                                className="mobile-menu-btn md:hidden"
+                                                aria-label="Toggle menu"
+                                            >
+                                                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                                            </button>
+                                        )}
                                         <Link to="/" className="flex items-center gap-3 no-underline">
                                             <div className="app-logo">TD</div>
                                             <div className="app-title">Task Drive</div>

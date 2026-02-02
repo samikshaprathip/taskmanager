@@ -49,7 +49,50 @@
 .form-footer { margin-top: 10px; text-align: center; font-size: 13px; color: #888; }
 .security-note { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; color: #28a745; }
 
+@media (max-width: 768px) {
+  .signin-card { 
+    max-width: 95%; 
+    border-radius: 12px;
+  }
+  
+  .signin-header {
+    padding: 20px 16px;
+  }
+  
+  .signin-header h1 {
+    font-size: 22px;
+  }
+  
+  .signin-content { 
+    padding: 20px; 
+  }
+}
+
 @media (max-width: 480px) {
-  .signin-card { max-width: 100%; border-radius: 0; }
-  .signin-content { padding: 20px; }
+  .signin-card { 
+    max-width: 100%; 
+    border-radius: 0; 
+  }
+  
+  .signin-header {
+    padding: 18px 14px;
+  }
+  
+  .signin-header h1 {
+    font-size: 20px;
+  }
+  
+  .signin-content { 
+    padding: 18px; 
+  }
+  
+  .signin-actions {
+    grid-template-columns: 1fr;
+  }
+  
+  .user-email {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }

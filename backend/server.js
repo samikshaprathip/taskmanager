@@ -14,15 +14,24 @@ const port = process.env.PORT || 4000;
 
 const allowed = [process.env.FRONTEND_ORIGIN, 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176']
     .filter(Boolean);
+
+function isAllowedOrigin(origin){
+        if (allowed.includes(origin)) return true;
+        try{
+            const u = new URL(origin);
+            // allow any localhost dev origin (http://localhost:XXXX)
+            if(u.hostname === 'localhost' || u.hostname === '127.0.0.1') return true;
+            // allow Netlify subdomains (deploy previews)
+            if (u.hostname.endsWith('.netlify.app')) return true;
+        }catch(e){ /* ignore malformed origin */ }
+        return false;
+}
+
 app.use(cors({ origin: (origin, cb) => {
         
         if (!origin) return cb(null, true);
-        if (allowed.length === 0 || allowed.includes(origin)) return cb(null, true);
+        if (allowed.length === 0 || isAllowedOrigin(origin)) return cb(null, true);
        
-        try{
-            const u = new URL(origin);
-            if(u.hostname === 'localhost' || u.hostname === '127.0.0.1') return cb(null, true);
-        }catch(e){ /* ignore malformed origin */ }
         cb(new Error('CORS not allowed'))
 }, credentials: true }));
 

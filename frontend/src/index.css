@@ -268,6 +268,28 @@ input:-webkit-autofill, textarea:-webkit-autofill { -webkit-box-shadow: 0 0 0px 
 .app-title { font-weight:700; color: #0f172a; font-size: 18px }
 .app-logo { width:36px; height:36px; border-radius:8px; background: linear-gradient(135deg,var(--bg-gradient-start),var(--bg-gradient-end)); display:inline-flex; align-items:center; justify-content:center; color:#fff }
 
+/* Mobile menu button */
+.mobile-menu-btn {
+	display: none;
+	background: transparent;
+	border: none;
+	color: #0f172a;
+	cursor: pointer;
+	padding: 8px;
+	border-radius: 8px;
+	transition: background 0.2s ease;
+}
+
+.mobile-menu-btn:hover {
+	background: rgba(15,23,42,0.05);
+}
+
+@media (max-width: 768px) {
+	.mobile-menu-btn {
+		display: block;
+	}
+}
+
 .notif-button { position: relative; display:inline-flex; align-items:center; justify-content:center; padding:6px; border-radius:8px }
 .notif-button:hover { background: rgba(15,23,42,0.03) }
 .notif-badge { position:absolute; top:6px; right:6px; background: #ef4444; color:white; width:18px; height:18px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; font-size:12px; box-shadow: 0 4px 10px rgba(239,68,68,0.18) }
@@ -338,9 +360,276 @@ input:-webkit-autofill, textarea:-webkit-autofill { -webkit-box-shadow: 0 0 0px 
   transform: translateY(-1px);
 }
 
-@media (max-width: 720px) {
-	.search-input { display:none }
-	.app-title { font-size:16px }
+/* ===================================
+   RESPONSIVE MEDIA QUERIES
+   =================================== */
+
+/* Mobile First - Base styles for all devices */
+@media (max-width: 768px) {
+	/* Hide search on small screens */
+	.search-input { display:none !important; }
+	
+	/* Adjust app title */
+	.app-title { font-size:16px; }
+	
+	/* Navbar adjustments */
+	.navbar {
+		padding: 10px 16px;
+	}
+	
+	.app-container {
+		padding: 0 12px;
+	}
+	
+	/* Hide sidebar by default on mobile */
+	.sidebar {
+		position: fixed;
+		left: -280px;
+		top: 0;
+		height: 100vh;
+		z-index: 1000;
+		transition: left 0.3s ease;
+		width: 280px;
+		box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+	}
+	
+	.sidebar.open {
+		left: 0;
+	}
+	
+	/* Mobile overlay for sidebar */
+	.sidebar-overlay {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(0,0,0,0.5);
+		z-index: 999;
+	}
+	
+	.sidebar-overlay.active {
+		display: block;
+	}
+	
+	/* Stack navbar items */
+	.nav-left {
+		gap: 8px !important;
+	}
+	
+	/* Profile button adjustments */
+	.profile-btn {
+		padding: 6px 10px 6px 6px;
+		gap: 8px;
+	}
+	
+	.profile-btn .text-sm {
+		display: none;
+	}
+	
+	.profile-btn-icon {
+		width: 36px;
+		height: 36px;
+	}
+	
+	/* Logout button adjustments */
+	.logout-btn {
+		padding: 10px 16px;
+		font-size: 14px;
+	}
+	
+	.logout-btn span {
+		display: none;
+	}
+	
+	/* Sign in/up buttons */
+	.signin-btn, .register-btn {
+		padding: 8px 16px;
+		font-size: 14px;
+	}
+	
+	/* Layout adjustments */
+	.layout {
+		flex-direction: column;
+		padding: 16px;
+		gap: 20px;
+	}
+	
+	/* Main content full width on mobile */
+	.main-pane {
+		width: 100%;
+	}
+	
+	/* Card adjustments */
+	.card {
+		padding: 16px;
+		margin-bottom: 16px;
+	}
+	
+	/* Dashboard specific */
+	.layout aside {
+		width: 100% !important;
+		order: 2;
+	}
+	
+	/* Filter pills wrap on mobile */
+	.filter-group {
+		flex-wrap: wrap;
+	}
+	
+	.filter-pill {
+		font-size: 12px;
+		padding: 5px 8px;
+	}
+	
+	/* Task card adjustments */
+	.task-card {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+	}
+	
+	.task-card .task-left {
+		width: 100%;
+		flex-wrap: wrap;
+	}
+	
+	.task-card .card-actions {
+		opacity: 1;
+		width: 100%;
+		justify-content: flex-end;
+	}
+	
+	/* Modal adjustments */
+	.modal-overlay {
+		padding: 12px;
+	}
+	
+	.modal-overlay .card {
+		max-width: 100%;
+	}
+	
+	/* Unauth wrapper */
+	.unauth-wrapper {
+		padding: 16px;
+	}
+	
+	.unauth-card {
+		padding: 20px 18px;
+		max-width: 100%;
+	}
+	
+	/* Welcome icon smaller */
+	.welcome-icon {
+		font-size: 48px;
+	}
+	
+	/* Dashboard header adjustments */
+	.card .flex.items-center.justify-between {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 16px;
+	}
+	
+	.card .w-1\/3 {
+		width: 100% !important;
+	}
+	
+	/* Filter section mobile */
+	.card .flex.items-center.justify-between.mb-3 {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+	}
+	
+	.card .flex.items-center.gap-3 {
+		flex-direction: column;
+		align-items: flex-start;
+		width: 100%;
+		gap: 8px;
+	}
+	
+	/* Create panel adjustments */
+	.create-panel .flex {
+		flex-wrap: wrap;
+	}
+	
+	/* Avatar and user info mobile */
+	.card .flex.items-center.justify-end {
+		justify-content: flex-start !important;
+	}
+}
+
+/* Small mobile devices (max 480px) */
+@media (max-width: 480px) {
+	.app-logo {
+		width: 32px;
+		height: 32px;
+	}
+	
+	.app-title {
+		font-size: 14px;
+	}
+	
+	.profile-btn-icon {
+		width: 32px;
+		height: 32px;
+	}
+	
+	.logout-btn {
+		padding: 8px 12px;
+	}
+	
+	.signin-btn, .register-btn {
+		padding: 6px 12px;
+		font-size: 13px;
+	}
+	
+	.card {
+		padding: 12px;
+	}
+	
+	.layout {
+		padding: 12px;
+	}
+}
+
+/* Tablet adjustments (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+	.sidebar {
+		width: 220px;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+	
+	.layout {
+		padding: 24px;
+		gap: 24px;
+	}
+	
+	.search-input {
+		width: 300px;
+	}
+	
+	.layout aside {
+		width: 280px !important;
+	}
+}
+
+/* Desktop adjustments (1024px+) */
+@media (min-width: 1025px) {
+	.app-container {
+		max-width: 1400px;
+	}
+	
+	.sidebar {
+		width: 260px;
+	}
+	
+	.layout aside {
+		width: 360px;
+	}
 }
 
 /* Status filter pills */
@@ -460,6 +749,74 @@ input:-webkit-autofill, textarea:-webkit-autofill { -webkit-box-shadow: 0 0 0px 
 .collab-task-title { font-weight:800; font-size:17px; line-height: 1.6; }
 .collab-muted { color:#64748b; font-size: 15px; line-height: 1.8; margin-bottom: 8px; }
 .collab-pill { border-radius:999px; padding:4px 10px; font-weight:600; font-size:12px; }
+
+/* Responsive collaboration styles */
+@media (max-width: 768px) {
+  .collab-nav-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 20px;
+    gap: 12px;
+  }
+  
+  .collab-nav-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  
+  .collab-shell {
+    padding: 20px;
+  }
+  
+  .collab-section-title {
+    font-size: 20px;
+  }
+  
+  .collab-task-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px;
+  }
+  
+  .collab-share {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .collab-share input {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px;
+  }
+  
+  .collab-chip,
+  .collab-badge {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .collab-shell {
+    padding: 16px;
+  }
+  
+  .collab-card {
+    padding: 16px;
+  }
+  
+  .collab-section-title {
+    font-size: 18px;
+  }
+  
+  .collab-task-title {
+    font-size: 15px;
+  }
+  
+  .collab-muted {
+    font-size: 13px;
+  }
+}
 
 /* Subtle card hover lift for lists */
 .collab-card button, .collab-card input, .collab-card textarea, .collab-card select { transition: border-color .12s ease, box-shadow .12s ease; }

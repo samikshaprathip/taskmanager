@@ -1,6 +1,11 @@
 // For local development ensure the frontend points to the local backend API.
-// You can override by setting VITE_API_URL in `frontend/.env` if needed.
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:4000/api'
+// You can override by setting VITE_API_URL in `frontend/.env` or Netlify envs.
+// To be resilient, ensure the base always ends with '/api' even if misconfigured.
+let __base = import.meta.env.VITE_API_URL || 'http://localhost:4000/api'
+if (!/\/api\/?$/.test(__base)) {
+  __base = __base.replace(/\/+$/, '') + '/api'
+}
+const BASE = __base
 
 async function request(path, options = {}){
   const url = `${BASE}${path}`

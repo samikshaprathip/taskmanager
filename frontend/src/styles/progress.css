@@ -112,6 +112,11 @@
   .stat-card {
     padding: 16px;
   }
+  
+  .stat-card h3 {
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
 
   .user-profile-header {
     padding: 10px 16px;
@@ -122,5 +127,38 @@
     flex-direction: column;
     gap: 12px;
     align-items: flex-start;
+    padding: 16px;
+  }
+  
+  .progress-header h1 {
+    font-size: 1.75rem;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .progress-container {
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  .stat-card {
+    padding: 12px;
+  }
+  
+  .progress-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .overview-item {
+    font-size: 0.9rem;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .progress-container {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 24px;
   }
 }

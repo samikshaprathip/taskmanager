@@ -13,7 +13,7 @@ const TasksChart = ({ tasks = [] }) => {
     labels: ['Active', 'Completed'],
     datasets: [{
       data: [active, completed],
-      backgroundColor: ['#60a5fa', '#7c3aed'],
+      backgroundColor: ['#38bdf8', '#06b6d4'],
       hoverOffset: 6,
     }]
   }
@@ -42,8 +42,8 @@ const TasksChart = ({ tasks = [] }) => {
   }
 
   return (
-    <div className="card">
-      <h4 className="font-semibold mb-3">Tasks</h4>
+    <div className="bg-transparent shadow-none border-0 p-0">
+      <h4 className="font-semibold mb-3" style={{ letterSpacing: '-0.01em' }}>Tasks</h4>
       <div style={{ height: 260 }} className="flex items-center justify-center">
         <Doughnut data={data} options={options} />
       </div>

@@ -152,8 +152,8 @@ const Dashboard = () => {
           <div className="card mb-6">
             <div className="flex items-center justify-between">
               <div>
-                  <h2 className="text-xl font-semibold">{tasks.filter(t=>t.completed).length} task completed out of {tasks.length || 0}</h2>
-                <div className="text-sm text-gray-500 mt-2">14 October , Tuesday</div>
+                  <h2 className="text-xl font-bold" style={{ letterSpacing: '-0.02em' }}>{tasks.filter(t=>t.completed).length} task completed out of {tasks.length || 0}</h2>
+                <div className="text-sm text-gray-500 mt-2">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</div>
                 <CalendarStrip />
               </div>
                   <div className="w-1/3">

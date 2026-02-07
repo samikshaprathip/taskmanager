@@ -39,8 +39,8 @@ export default function DailyActivityChart({ tasks = [], days = 14 }){
       label: 'Tasks completed',
       data: counts,
       fill: true,
-      borderColor: '#06b6d4',
-      backgroundColor: 'rgba(6,182,212,0.12)'
+      borderColor: '#0ea5e9',
+      backgroundColor: 'rgba(14,165,233,0.15)'
     }]
   }
 
@@ -54,8 +54,8 @@ export default function DailyActivityChart({ tasks = [], days = 14 }){
   }
 
   return (
-    <div className="card">
-      <h4 className="font-semibold mb-3">Daily Activity</h4>
+    <div className="bg-transparent shadow-none border-0 p-0">
+      <h4 className="font-semibold mb-3" style={{ letterSpacing: '-0.01em' }}>Daily Activity</h4>
       <div style={{height: 180}}>
         <Line data={data} options={options} />
       </div>

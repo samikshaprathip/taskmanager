@@ -14,7 +14,7 @@ const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const location = useLocation()
 
-    const { user, logout, isGuest } = useAuth()
+    const { user, logout, isGuest, isPreview } = useAuth()
     const navigate = useNavigate()
     const [profileOpen, setProfileOpen] = useState(false)
     const [signInOpen, setSignInOpen] = useState(false)
@@ -68,12 +68,15 @@ const Navbar = () => {
                                                         <div className="font-medium text-gray-800">{user.name}</div>
                                                     </div>
                                                 </button>
+                                                {isPreview && (
+                                                    <span className="preview-badge">Preview</span>
+                                                )}
                                                 <button
                                                     onClick={logout}
                                                     className="logout-btn"
                                                 >
                                                     <LogOut size={18} />
-                                                    <span>Logout</span>
+                                                    <span>{isPreview ? 'Exit Preview' : 'Logout'}</span>
                                                 </button>
                                                 <ProfileModal isOpen={profileOpen} onRequestClose={()=>setProfileOpen(false)} />
                                             </div>
@@ -84,7 +87,7 @@ const Navbar = () => {
                                                         <button onClick={()=>setSignInOpen(true)} className="signin-btn">Sign In</button>
                                                         <button onClick={()=>setRegisterOpen(true)} className="register-btn">Sign Up</button>
                                                         <SignInModal isOpen={signInOpen} onRequestClose={()=>setSignInOpen(false)} onOpenRegister={()=>{setSignInOpen(false);setRegisterOpen(true)}} />
-                                                        <RegisterModal isOpen={registerOpen} onRequestClose={()=>setRegisterOpen(false)} onOpenSignIn={()=>{setRegisterOpen(false);setSignInOpen(true)}} />
+                                                        <RegisterModal isOpen={registerOpen} onRequestClose={()=>setRegisterOpen(false)} onOpenSignIn={()=>{ setRegisterOpen(false); setSignInOpen(true); }} />
                                                     </>
                                                 )}
                                             </div>

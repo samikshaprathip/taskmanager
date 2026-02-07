@@ -82,7 +82,7 @@ const SignInModal = ({ isOpen, onRequestClose }) => {
         </div>
       </div>
 
-      <RegisterModal isOpen={registerOpen} onRequestClose={()=>setRegisterOpen(false)} />
+      <RegisterModal isOpen={registerOpen} onRequestClose={()=>setRegisterOpen(false)} onOpenSignIn={()=>setRegisterOpen(false)} />
     </Modal>
   )
 }

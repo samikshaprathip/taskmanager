@@ -1,24 +1,31 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { auth as apiAuth } from '../api'
 
+const PREVIEW_TOKEN = '__preview__'
+const DEMO_USER = { _id: 'demo', name: 'Demo User', email: 'demo@taskdrive.app' }
+
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }){
   const [user, setUser] = useState(null)
-  const [token, setToken] = useState(() => localStorage.getItem('token'))
+  const [token, setToken] = useState(() => sessionStorage.getItem('isPreview') === 'true' ? PREVIEW_TOKEN : localStorage.getItem('token'))
   const [loading, setLoading] = useState(false)
   const [isGuest, setIsGuest] = useState(() => sessionStorage.getItem('isGuest') === 'true')
+  const [isPreview, setIsPreview] = useState(() => sessionStorage.getItem('isPreview') === 'true')
 
   useEffect(()=>{
-    if(token){
-      setLoading(true)
-      apiAuth.me(token).then(res => {
-        setUser(res.user)
-      }).catch(()=>{
-        setToken(null)
-        localStorage.removeItem('token')
-      }).finally(()=> setLoading(false))
+    if (!token) return
+    if (token === PREVIEW_TOKEN) {
+      setUser(DEMO_USER)
+      return
     }
+    setLoading(true)
+    apiAuth.me(token).then(res => {
+      setUser(res.user)
+    }).catch(()=>{
+      setToken(null)
+      localStorage.removeItem('token')
+    }).finally(()=> setLoading(false))
   }, [token])
 
   const login = async (email, password) => {
@@ -51,7 +58,16 @@ export function AuthProvider({ children }){
     setToken(null)
     localStorage.removeItem('token')
     setIsGuest(false)
+    setIsPreview(false)
     sessionStorage.removeItem('isGuest')
+    sessionStorage.removeItem('isPreview')
+  }
+
+  const enterPreviewMode = () => {
+    setToken(PREVIEW_TOKEN)
+    setUser(DEMO_USER)
+    setIsPreview(true)
+    sessionStorage.setItem('isPreview', 'true')
   }
 
   const setGuestMode = (value) => {
@@ -64,7 +80,7 @@ export function AuthProvider({ children }){
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, isGuest, login, logout, register, updateProfile, setGuestMode }}>
+    <AuthContext.Provider value={{ user, token, loading, isGuest, isPreview, login, logout, register, updateProfile, setGuestMode, enterPreviewMode }}>
       {children}
     </AuthContext.Provider>
   )

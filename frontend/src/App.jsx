@@ -11,15 +11,23 @@ import Notes from './pages/Notes'
 import AcceptInvite from './pages/AcceptInvite'
 import { useAuth } from './context/AuthContext'
 
-const WelcomeScreen = () => (
-  <div className="unauth-wrapper">
-    <div className="unauth-card welcome-card">
-      <div className="welcome-icon">👋</div>
-      <h2>Welcome to Task Drive</h2>
-      <p>Please sign in or create an account to access your tasks and collaborate with your team.</p>
+const WelcomeScreen = () => {
+  const { enterPreviewMode } = useAuth()
+  return (
+    <div className="unauth-wrapper">
+      <div className="unauth-card welcome-card">
+        <div className="welcome-icon">👋</div>
+        <h2>Welcome to Task Drive</h2>
+        <p>Please sign in or create an account to access your tasks and collaborate with your team.</p>
+        <div className="welcome-actions">
+          <button type="button" onClick={enterPreviewMode} className="preview-btn">
+            Preview UI without signing in
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 const Unauthorized = () => (
   <div className="unauth-wrapper">
@@ -31,7 +39,7 @@ const Unauthorized = () => (
   </div>
 )
 
-const Protected = ({ children, requireAuth = true }) => {
+const Protected = ({ children }) => {
   const { token, isGuest } = useAuth()
   if (!token) {
     return isGuest ? <Unauthorized /> : <WelcomeScreen />

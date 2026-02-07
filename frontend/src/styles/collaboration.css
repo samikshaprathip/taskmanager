@@ -24,7 +24,7 @@ body .collab-v2 {
 
 /* Header Section */
 .collab-v2 .page-header {
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
   color: white;
   padding: 25px 30px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -73,7 +73,7 @@ body .collab-v2 {
   border-radius: 10px;
   padding: 25px;
   margin-bottom: 30px;
-  border-left: 5px solid #6a11cb;
+  border-left: 5px solid #0ea5e9;
 }
 
 .collab-v2 .project-title-section {
@@ -89,8 +89,8 @@ body .collab-v2 {
 }
 
 .collab-v2 .team-badge {
-  background-color: #e8f4ff;
-  color: #2575fc;
+  background-color: #e0f2fe;
+  color: #0284c7;
   padding: 6px 15px;
   border-radius: 20px;
   font-size: 14px;
@@ -120,8 +120,8 @@ body .collab-v2 {
 }
 
 .collab-v2 .btn-team {
-  background-color: #e8f4ff;
-  color: #2575fc;
+  background-color: #e0f2fe;
+  color: #0284c7;
 }
 
 .collab-v2 .btn-delete {
@@ -136,11 +136,11 @@ body .collab-v2 {
 
 /* Invite Link Section */
 .collab-v2 .invite-section {
-  background-color: #f0f7ff;
+  background-color: #e0f2fe;
   border-radius: 10px;
   padding: 25px;
   margin-bottom: 30px;
-  border: 1px solid #d1e7ff;
+  border: 1px solid #bae6fd;
 }
 
 .collab-v2 .section-title {
@@ -153,7 +153,7 @@ body .collab-v2 {
 }
 
 .collab-v2 .section-title i {
-  color: #6a11cb;
+  color: #0ea5e9;
 }
 
 .collab-v2 .invite-link-box {
@@ -169,7 +169,7 @@ body .collab-v2 {
 
 .collab-v2 .invite-link {
   font-family: monospace;
-  color: #2575fc;
+  color: #0284c7;
   font-size: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -178,7 +178,7 @@ body .collab-v2 {
 }
 
 .collab-v2 .btn-copy {
-  background-color: #6a11cb;
+  background-color: #0ea5e9;
   color: white;
   white-space: nowrap;
 }
@@ -208,12 +208,12 @@ body .collab-v2 {
   border-radius: 8px;
   background-color: #f9fafc;
   margin-bottom: 15px;
-  border-left: 4px solid #ff9800;
+  border-left: 4px solid #0ea5e9;
   transition: all 0.2s ease;
 }
 
 .collab-v2 .task-item:hover {
-  background-color: #f0f4ff;
+  background-color: #e0f2fe;
   transform: translateX(5px);
 }
 
@@ -238,7 +238,7 @@ body .collab-v2 {
 }
 
 .collab-v2 .task-due i {
-  color: #ff9800;
+  color: #0ea5e9;
 }
 
 .collab-v2 .priority-badge {
@@ -253,17 +253,18 @@ body .collab-v2 {
 .collab-v2 .priority-low { background-color: #e8f5e9; color: #2e7d32; }
 
 .collab-v2 .btn-add-task {
-  background-color: #f0f7ff;
-  color: #2575fc;
+  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+  color: #fff;
   width: 100%;
   justify-content: center;
   padding: 12px;
   margin-top: 10px;
-  border: 1px dashed #a3c4ff;
+  border: none;
 }
 
 .collab-v2 .btn-add-task:hover {
-  background-color: #e1eeff;
+  box-shadow: 0 6px 20px rgba(14,165,233,0.4);
+  transform: translateY(-2px);
 }
 
 /* Footer */
@@ -422,7 +423,7 @@ body .collab-v2 {
 }
 
 .create-project-header {
-  background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+  background: linear-gradient(90deg, #0ea5e9 0%, #06b6d4 100%);
   color: #fff;
   padding: 28px 30px;
   text-align: center;
@@ -461,8 +462,8 @@ body .collab-v2 {
 
 .project-input:focus {
   outline: none;
-  border-color: #2575fc;
-  box-shadow: 0 0 0 3px rgba(37,117,252,0.15);
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.15);
 }
 
 .create-project-actions {
@@ -492,14 +493,14 @@ body .collab-v2 {
 }
 
 .create-project-actions .btn-save {
-  background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+  background: linear-gradient(90deg, #0ea5e9 0%, #06b6d4 100%);
   color: #fff;
-  box-shadow: 0 4px 14px rgba(37,117,252,0.3);
+  box-shadow: 0 4px 14px rgba(14,165,233,0.3);
 }
 
 .create-project-actions .btn-save:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37,117,252,0.4);
+  box-shadow: 0 6px 20px rgba(14,165,233,0.4);
 }
 
 .create-project-actions .btn-cancel {

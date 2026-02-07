@@ -50,7 +50,7 @@ const TaskCard = ({ task, onDeleted, onUpdated, onEdit }) => {
         </label>
 
         <div style={{display:'flex', alignItems:'center', gap:12}}>
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-cyan-300 flex items-center justify-center text-white shadow-sm"><User size={18} /></div>
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-400 to-cyan-400 flex items-center justify-center text-white shadow-md" style={{ boxShadow: '0 4px 12px rgba(14,165,233,0.35)' }}><User size={18} /></div>
           <div>
             <h3 className="task-title mb-1">{task.title}</h3>
             <div className="flex items-center gap-3 task-meta">

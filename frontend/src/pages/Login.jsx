@@ -29,16 +29,19 @@ const Login = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto py-12">
-      <h2 className="text-2xl font-semibold mb-4">Login</h2>
-      <form onSubmit={submit} className="space-y-3">
-        <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" className="w-full p-2 border rounded" />
-        <input value={password} onChange={e=>setPassword(e.target.value)} placeholder="Password" type="password" className="w-full p-2 border rounded" />
-        {error && <div className="text-red-600">{error}</div>}
-        <div className="text-right">
-          <button className="px-4 py-2 btn-primary">Login</button>
-        </div>
-      </form>
+    <div className="max-w-md mx-auto py-16 px-4">
+      <div className="card">
+        <h2 className="text-2xl font-bold mb-2" style={{ letterSpacing: '-0.02em' }}>Login</h2>
+        <p className="text-sm text-gray-500 mb-6">Sign in to access your tasks</p>
+        <form onSubmit={submit} className="space-y-4">
+          <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-sky-200 focus:border-sky-400 transition-all" style={{ borderColor: 'rgba(15,23,42,0.1)' }} />
+          <input value={password} onChange={e=>setPassword(e.target.value)} placeholder="Password" type="password" className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-sky-200 focus:border-sky-400 transition-all" style={{ borderColor: 'rgba(15,23,42,0.1)' }} />
+          {error && <div className="text-red-600 text-sm font-medium">{error}</div>}
+          <div className="text-right pt-2">
+            <button type="submit" className="btn-primary">Login</button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

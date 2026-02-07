@@ -22,8 +22,9 @@ const Tasks = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
-      <h2 className="text-2xl font-semibold mb-4">Tasks</h2>
-      <div className="grid gap-4">
+      <h2 className="text-2xl font-bold mb-2" style={{ letterSpacing: '-0.02em' }}>Tasks</h2>
+      <p className="text-gray-500 text-sm mb-6">Manage and track your personal tasks</p>
+      <div className="space-y-3">
         {tasks.map(t => <TaskCard key={t._id} task={t} onDeleted={handleDeleted} onUpdated={handleUpdated} />)}
       </div>
     </div>
